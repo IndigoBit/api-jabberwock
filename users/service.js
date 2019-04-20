@@ -36,7 +36,11 @@ async function updateUser({ _id, name, email, username, active }) {
     }
   });
 
-  return Model.findOneAndUpdate({ _id }, { $set: update });
+  return Model.findOneAndUpdate(
+    { _id },
+    { $set: update },
+    { new: true, runValidators: true }
+  );
 }
 
 async function destroyUser({ _id }) {
@@ -44,17 +48,26 @@ async function destroyUser({ _id }) {
 }
 
 async function enableUser({ _id }) {
-  return Model.findOneAndUpdate({ _id }, { $set: { active: true } });
+  return Model.findOneAndUpdate(
+    { _id },
+    { $set: { active: true } },
+    { new: true, runValidators: true }
+  );
 }
 
 async function disableUser({ _id }) {
-  return Model.findOneAndUpdate({ _id }, { $set: { active: false } });
+  return Model.findOneAndUpdate(
+    { _id },
+    { $set: { active: false } },
+    { new: true, runValidators: true }
+  );
 }
 
 async function resetUserPassword({ _id }) {
   return Model.findOneAndUpdate(
     { _id },
-    { $set: { requirePasswordReset: true } }
+    { $set: { requirePasswordReset: true } },
+    { new: true, runValidators: true }
   );
 }
 

@@ -8,6 +8,7 @@ const typeDefs = gql`
     active: Boolean
     articles: [Article]
     requirePasswordReset: Boolean
+    token: String
   }
 `;
 

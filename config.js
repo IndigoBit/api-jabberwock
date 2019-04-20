@@ -10,3 +10,7 @@ function getConfig() {
 }
 
 module.exports = { getConfig };
+
+// sample jwt - expires july 15 2019
+// eslint-disable-next-line max-len
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YzI4ZjVlNDlmNjMxMzEyNGNlNGQ0MTEiLCJpYXQiOjE1MTYyMzkwMjIsImV4cCI6MTU2MzIzOTAyMiwianRpIjoiMzc1YjYxOWUtOTZlMy00MzYwLTgzMTMtYzZkOGMzMWU2NzBjIn0.bjQstelvlBRRNNhR0SAZjI2cAh1jO8LwR63jLfCk_ng

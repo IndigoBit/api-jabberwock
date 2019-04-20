@@ -40,7 +40,11 @@ async function updateArticle({ _id, name, description, content, tags }) {
     }
   });
 
-  return Model.findOneAndUpdate({ _id }, { $set: update });
+  return Model.findOneAndUpdate(
+    { _id },
+    { $set: update },
+    { new: true, runValidators: true }
+  );
 }
 
 async function destroyArticle({ _id }) {

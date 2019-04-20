@@ -8,7 +8,14 @@ const { getConfig } = require("./config");
  * @param {*} token
  */
 function requireAuthentication(token) {
-  if (!token) throw new Error("Unauthorized");
+  if (!token) throw new Error("UNAUTHORIZED");
+  if (token.tokenExpired) throw new Error("TOKEN_EXPIRED");
+  if (token.badToken) throw new Error("BAD_TOKEN");
+  if (!token.decodedToken) throw new Error("UNAUTHORIZED");
+
+  ["sub", "jti"].forEach(field => {
+    if (!token.decodedToken[field]) throw new Error("BAD_TOKEN");
+  });
 }
 
 function getRequestUser() {
@@ -16,17 +23,22 @@ function getRequestUser() {
 
   return ({ req }) => {
     const auth = {};
-    const token = req.headers.authorization;
 
-    if (!token) return auth;
+    const BearerPrefix = "Bearer ";
+    const header = req.headers.authorization;
+    if (!header || header.indexOf(BearerPrefix) !== 0) {
+      return auth;
+    }
+
+    auth.token = header.split(BearerPrefix)[1];
 
     // decode the token and verify it.
     // if there is an error set the appropriate flag and return it
     let decodedToken;
     try {
-      decodedToken = jwt.verify(token, config.jwtSecret);
+      decodedToken = jwt.verify(auth.token, config.jwtSecret);
     } catch (err) {
-      switch (err) {
+      switch (err && err.name) {
         case "TokenExpiredError":
           auth.tokenExpired = true;
           break;
@@ -39,10 +51,7 @@ function getRequestUser() {
     }
 
     // if we're here then token is verified and got decoded properly
-
-    auth.decoded = decodedToken;
-
-    console.log(`auth, ${auth}`);
+    auth.decodedToken = decodedToken;
 
     return auth;
   };

@@ -12,6 +12,7 @@ const query = gql`
   type Query {
     userList: [User]!
     user(_id: ID): User
+    currentUser: User
 
     articleList: [Article]!
     article(_id: ID): Article
@@ -19,6 +20,7 @@ const query = gql`
   }
 `;
 
+// todo: split mutations out in module folders
 const mutation = gql`
   type Mutation {
     createUser(
@@ -29,6 +31,8 @@ const mutation = gql`
     ): User
     updateUser(_id: ID!, name: String, username: String, email: String): User
     destroyUser(_id: ID!): User
+    login(email: String!, password: String!): User
+    logout: Boolean
 
     createArticle(
       name: String!

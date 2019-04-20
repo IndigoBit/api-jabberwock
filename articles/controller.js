@@ -10,7 +10,7 @@ async function getArticleList() {
 }
 
 async function getArticle(args) {
-  return service.getArticle({ userId: args._id });
+  return service.getArticle({ _id: args._id });
 }
 
 async function createArticle(args) {

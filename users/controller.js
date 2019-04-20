@@ -11,8 +11,16 @@ async function getUserList(context) {
   return service.getUserList();
 }
 
-async function getUser(args) {
-  return service.getUser({ userId: args._id });
+async function getUser(args, context) {
+  requireAuthentication(context);
+  return service.getUser({ _id: args._id });
+}
+
+async function getCurrentUser(context) {
+  requireAuthentication(context);
+  console.log(context.decodedToken.sub);
+  const user = await service.getUser({ _id: context.decodedToken.sub });
+  return Object.assign(user.toObject(), { token: context.token });
 }
 
 async function createUser(args) {
@@ -46,6 +54,7 @@ async function getUsersArticles({ userId }) {
 module.exports = {
   getUserList,
   getUser,
+  getCurrentUser,
   createUser,
   updateUser,
   destroyUser,
