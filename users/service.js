@@ -1,5 +1,5 @@
-const ArticleService = require('../articles/service');
-const { Model } = require('./model');
+const ArticleService = require("../articles/service");
+const { Model } = require("./model");
 
 // limit/skip/sort?
 async function getUserList() {
@@ -10,26 +10,28 @@ async function getUser({ _id }) {
   return Model.findById(_id);
 }
 
-async function createUser({
-  name, email, username, active,
-}) {
+async function createUser({ name, email, username, active }) {
   const user = new Model({
-    name, email, username, active,
+    name,
+    email,
+    username,
+    active
   });
   user.requirePasswordReset = true;
 
   return user.save();
 }
 
-async function updateUser({
-  _id, name, email, username, active,
-}) {
+async function updateUser({ _id, name, email, username, active }) {
   const update = {
-    name, email, username, active,
+    name,
+    email,
+    username,
+    active
   };
 
-  Object.keys(update).forEach((field) => {
-    if (typeof update[field] === 'undefined') {
+  Object.keys(update).forEach(field => {
+    if (typeof update[field] === "undefined") {
       delete update[field];
     }
   });
@@ -52,14 +54,14 @@ async function disableUser({ _id }) {
 async function resetUserPassword({ _id }) {
   return Model.findOneAndUpdate(
     { _id },
-    { $set: { requirePasswordReset: true } },
+    { $set: { requirePasswordReset: true } }
   );
 }
 
 async function getUsersArticles({ userId }) {
   const articleList = await ArticleService.getArticleListByUserId({ userId });
-  return articleList.map(
-    article => Object.assign(article.toObject(), { creator: getUser({ _id: userId }) }),
+  return articleList.map(article =>
+    Object.assign(article.toObject(), { creator: getUser({ _id: userId }) })
   );
 }
 
@@ -72,5 +74,5 @@ module.exports = {
   enableUser,
   disableUser,
   resetUserPassword,
-  getUsersArticles,
+  getUsersArticles
 };

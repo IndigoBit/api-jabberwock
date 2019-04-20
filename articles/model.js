@@ -1,21 +1,22 @@
-const mongoose = require('mongoose');
-const version = require('mongoose-version');
+const mongoose = require("mongoose");
+const version = require("mongoose-version");
 
 const articleSchema = new mongoose.Schema(
   {
-    name: { type: String, required: [true, 'Name is required'] },
+    name: { type: String, required: [true, "Name is required"] },
     description: String,
     content: String,
     tags: [String],
-    creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  }, {
-    timestamps: true,
+    creator: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
   },
+  {
+    timestamps: true
+  }
 );
 
-articleSchema.plugin(version, { collection: 'articles_v' });
+articleSchema.plugin(version, { collection: "articles_v" });
 
-const Model = mongoose.model('Article', articleSchema);
+const Model = mongoose.model("Article", articleSchema);
 
 module.exports = { Model };

@@ -1,11 +1,13 @@
-const service = require('./service');
+const service = require("./service");
+const { requireAuthentication } = require("../auth");
 
 // todo: for all, validate the input
 // todo: get the fields from graphql,
 // feed to service to use in projection;
 // might be an issue with caching?
 
-async function getUserList() {
+async function getUserList(context) {
+  requireAuthentication(context);
   return service.getUserList();
 }
 
@@ -50,5 +52,5 @@ module.exports = {
   enableUser,
   disableUser,
   resetUserPassword,
-  getUsersArticles,
+  getUsersArticles
 };

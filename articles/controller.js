@@ -1,4 +1,4 @@
-const service = require('./service');
+const service = require("./service");
 
 // todo: for all, validate the input
 // todo: get the fields from graphql,
@@ -30,5 +30,5 @@ module.exports = {
   getArticle,
   createArticle,
   updateArticle,
-  destroyArticle,
+  destroyArticle
 };

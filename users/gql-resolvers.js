@@ -1,9 +1,9 @@
-const controller = require('./controller');
+const controller = require("./controller");
 
 const resolvers = {
   Query: {
-    userList: async () => controller.getUserList(),
-    user: async (_, args) => controller.getUser(args),
+    userList: async (_, __, context) => controller.getUserList(context),
+    user: async (_, args) => controller.getUser(args)
   },
   Mutation: {
     createUser: async (_, args) => controller.createUser(args),
@@ -11,11 +11,12 @@ const resolvers = {
     destroyUser: async (_, args) => controller.destroyUser(args),
     enableUser: async (_, args) => controller.enableUser(args),
     disableUser: async (_, args) => controller.disableUser(args),
-    resetUserPassword: async (_, args) => controller.resetUserPassword(args),
+    resetUserPassword: async (_, args) => controller.resetUserPassword(args)
   },
   User: {
-    articles: async parent => controller.getUsersArticles({ userId: parent._id }),
-  },
+    articles: async parent =>
+      controller.getUsersArticles({ userId: parent._id })
+  }
 };
 
 module.exports = { resolvers };

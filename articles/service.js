@@ -1,4 +1,4 @@
-const { Model } = require('./model');
+const { Model } = require("./model");
 
 // limit/skip/sort?
 async function getArticleList() {
@@ -13,33 +13,29 @@ async function getArticleListByUserId({ userId }) {
   return Model.find({ creator: userId });
 }
 
-async function createArticle({
-  name, description, content, tags, creator,
-}) {
+async function createArticle({ name, description, content, tags, creator }) {
   const user = new Model({
     name,
     description,
     content,
     tags,
-    creator,
+    creator
   });
   await user.save();
 
   return user;
 }
 
-async function updateArticle({
-  _id, name, description, content, tags,
-}) {
+async function updateArticle({ _id, name, description, content, tags }) {
   const update = {
     name,
     description,
     content,
-    tags,
+    tags
   };
 
-  Object.keys(update).forEach((field) => {
-    if (typeof update[field] === 'undefined') {
+  Object.keys(update).forEach(field => {
+    if (typeof update[field] === "undefined") {
       delete update[field];
     }
   });
@@ -57,5 +53,5 @@ module.exports = {
   createArticle,
   updateArticle,
   destroyArticle,
-  getArticleListByUserId,
+  getArticleListByUserId
 };

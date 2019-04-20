@@ -1,7 +1,7 @@
 // setup process env
-require('dotenv').config();
+require("dotenv").config();
 
-const { start } = require('./app');
+const { start } = require("./app");
 
 start()
   .then(({ server, port }) => server.listen(port))
@@ -9,7 +9,7 @@ start()
     // eslint-disable-next-line no-console
     console.log(`🚀 Server ready at ${url}`);
   })
-  .catch((err) => {
+  .catch(err => {
     // eslint-disable-next-line no-console
     console.error(err);
 
