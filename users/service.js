@@ -1,3 +1,4 @@
+const ArticleService = require('../articles/service');
 const { Model } = require('./model');
 
 // limit/skip/sort?
@@ -55,8 +56,14 @@ async function resetUserPassword({ _id }) {
   );
 }
 
-async function getUsersArticles() {
-  throw new Error('Unimplemented Feature');
+async function getUsersArticles({ userId }) {
+  const articleList = await ArticleService.getArticleListByUserId({ userId });
+  const a = await Promise.all(articleList.map(async (article) =>
+    Object.assign({}, article.toObject(), { creator: await getUser({ _id: userId }) })
+  ));
+  console.log(a);
+  return a;
+
 }
 
 module.exports = {

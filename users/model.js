@@ -19,19 +19,6 @@ const userSchema = new mongoose.Schema(
   },
 );
 
-/**
- * Article.createdBy joins to User._id
- *
- * Returns an array of articles create by this user
- */
-userSchema.virtual('articles', {
-  ref: 'Article',
-  localField: '_id',
-  foreignField: 'createdBy',
-  justOne: false,
-  options: { sort: { lastUpdateBy: -1 } },
-});
-
 userSchema.plugin(version, { collection: 'users_v' });
 
 const Model = mongoose.model('User', userSchema);

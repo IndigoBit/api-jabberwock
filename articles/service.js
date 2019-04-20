@@ -9,6 +9,10 @@ async function getArticle({ _id }) {
   return Model.findById(_id);
 }
 
+async function getArticleListByUserId({ userId }) {
+  return Model.find({ creator: userId });
+}
+
 async function createArticle({
   name, description, content, tags, creator,
 }) {
@@ -53,4 +57,5 @@ module.exports = {
   createArticle,
   updateArticle,
   destroyArticle,
+  getArticleListByUserId,
 };
