@@ -58,12 +58,9 @@ async function resetUserPassword({ _id }) {
 
 async function getUsersArticles({ userId }) {
   const articleList = await ArticleService.getArticleListByUserId({ userId });
-  const a = await Promise.all(articleList.map(async (article) =>
-    Object.assign({}, article.toObject(), { creator: await getUser({ _id: userId }) })
-  ));
-  console.log(a);
-  return a;
-
+  return articleList.map(
+    article => Object.assign(article.toObject(), { creator: getUser({ _id: userId }) }),
+  );
 }
 
 module.exports = {
